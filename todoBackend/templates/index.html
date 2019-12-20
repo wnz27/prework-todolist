@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css_style %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+{% endblock %}
+{% block title %}
+test hahaha
+{% endblock %}
+{% block content %}
+<h1>hello django {{ name }}</h1>
+<ul>
+{% for item in array %}
+<li>
+{{ item }} -- {{ forloop.counter0 }} -- {{forloop.counter}} -- 
+{{ forloop.revcounter }} -- {{ forloop.revcounter0 }}
+{% if forloop.first %}
+is first
+{% elif forloop.last %}
+is last
+{% endif %}
+</li>
+{% empty %}
+<li>is empty</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'index' 'fzk' %}"> return </p>
+{% endblock %}
+
