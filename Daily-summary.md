@@ -19,4 +19,5 @@
 ## 2019.12.20
 1. 学习在ubuntu搭建PostgreSQL
     - [How To Use PostgreSQL with your Django Application on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04)
-2. 前端组件搭建
+2. 回顾Django的ORM及modelAPI操作
+3. todolistmodel构思及完成
