@@ -32,6 +32,7 @@
 - [ ] 支持按照不同的方式排序，如优先级，expire date
 - [ ] API 带有测试用例
 - [ ] 前端使用 TypeScript
+- [X] 配置云服务器，远程ssh连接，增加安全性拒绝ssh直接连接root
 
 #### 提交
 - [ ] 在 Github 上创建一个 Repo，把代码传上去
