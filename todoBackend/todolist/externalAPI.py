@@ -7,7 +7,7 @@ import functools
 
 #######################    全局常量    ######################
 # 每页显示任务数量
-PAGE_CONTENT = 3
+PAGE_CONTENT = 8
 
 
 #######################    自定义可复用方法    ######################
@@ -36,11 +36,29 @@ def search_exception(pass_in_search):
             raise print(e + pass_in_search.__name__ + 'load failed!!!')
     return wrapper
 
-# model序列化操作封装
+# 基于model序列化操作封装
 def serialize_to_json_handler(querysetObjs):
-    json_tasks = serializers.serialize('json',querysetObjs)
-    json_tasks = json.loads(json_tasks)
-    return json_tasks
+        json_tasks = serializers.serialize('json',querysetObjs)
+        json_tasks = json.loads(json_tasks)
+        return json_tasks
+
+# 基于model序列化操作封装，生成manager基类，暂没想到办法
+# class MyBaseManager(models.Manager):
+#     @classmethod
+#     def serialize_to_json_handler(cls, querysetObjs, filter_field=None):
+#         if filter_field == None:
+#             pass
+#         else:
+#             querysetObjs = super().get_queryset().filter()
+#         json_tasks = serializers.serialize('json',querysetObjs)
+#         json_tasks = json.loads(json_tasks)
+#         return json_tasks
+
+# 封装页数起始索引
+def page_content_for(pageNum):
+    start_index = PAGE_CONTENT * (pageNum-1)
+    end_index = PAGE_CONTENT * pageNum
+    return (start_index, end_index)
 
 #######################    自定义model的Manager类    ######################
 class TaskManager(models.Manager):
@@ -97,38 +115,44 @@ class TaskManager(models.Manager):
         task_queryset = super().get_queryset().filter(pk=task_id)
         return task_queryset[0]
 
-    # 查询所有待办事项
-    @search_exception
-    def search_all_tasks(self):
-        tasks = super().get_queryset().all()
-        return serialize_to_json_handler(tasks)
+    # # 查询所有待办事项
+    # @search_exception
+    # def search_all_tasks(self):
+    #     tasks = super().get_queryset().all()
+    #     return serialize_to_json_handler(tasks)
 
 
     # 根据页号，查询待办事项
     @search_exception
-    def search_tasks_for_page(self, pageNum):
-        start_index = PAGE_CONTENT * (pageNum-1)
-        end_index = PAGE_CONTENT * pageNum
-        tasks = super().get_queryset().all()[start_index:end_index]
+    def search_tasks_for_page(self, pageNum=1):
+        indexs = page_content_for(pageNum)
+        tasks = super().get_queryset().all()[indexs[0]:indexs[1]]
         return serialize_to_json_handler(tasks)
 
     # 根据project筛选待办事项
     @search_exception
-    def search_tasks_for_project(self, pass_project):
-        tasks = super().get_queryset().filter(project=pass_project)
+    def search_tasks_for_project(self, pass_project, pageNum=1):
+        indexs = page_content_for(pageNum)
+        tasks = super().get_queryset().filter(project=pass_project)[indexs[0]:indexs[1]]
         return serialize_to_json_handler(tasks)
 
     # 根据tag筛选待办事项
     @search_exception
-    def search_tasks_for_tag(self, tag):
-        pass
+    def search_tasks_for_tag(self, pass_tag, pageNum=1):
+        indexs = page_content_for(pageNum)
+        tasks = super().get_queryset().filter(tag=pass_tag)[indexs[0]:indexs[1]]
+        return serialize_to_json_handler(tasks)
 
     # 按照优先级筛选显示
     @search_exception
-    def search_task_for_priority(self, pri):
-        pass 
+    def search_task_for_priority(self, pri, pageNum=1):
+        indexs = page_content_for(pageNum)
+        tasks = super().get_queryset().filter(taskPriority=pri)[indexs[0]:indexs[1]]
+        return serialize_to_json_handler(tasks) 
 
     # 按照过期时间筛选显示
     @search_exception
-    def search_tasks_for_deadline(self):
-        pass
+    def search_tasks_for_deadline(self, pageNum=1):
+        indexs = page_content_for(pageNum)
+        tasks = super().get_queryset().order_by('deadline')[indexs[0]:indexs[1]]
+        return tasks
