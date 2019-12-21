@@ -69,3 +69,5 @@ The terminal process terminated with exit code: 1
 反思：批量导入是必经之途，手动导入小项目没有问题，大的项目就会很麻烦了。
 
 ## 2019.12.21
+1. 研究下manager，models API巩固
+2. 对外api操作重新封装供以后视图函数调用
