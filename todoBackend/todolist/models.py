@@ -1,5 +1,5 @@
 from django.db import models
-from .externalAPI import taskManager
+from .externalAPI import TaskManager
 import uuid
 
 TASK_PRIORITY = [
@@ -34,7 +34,7 @@ class TodoTask(models.Model):
 
     # externalAPI对象包含所有允许对外操作的方法
     # 视图函数只能从该属性包含方法操作该表
-    externalAPI = taskManager()
+    externalAPI = TaskManager()
 
     class Meta:         # 元数据定义
         verbose_name = '待办任务'
