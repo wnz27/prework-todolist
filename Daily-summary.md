@@ -80,4 +80,4 @@ The terminal process terminated with exit code: 1
 
 ## 2019.12.23
 1. URL配置，视图函数配置
-2. 前端组件配置
+2. 前端组件配置,差最后一个编辑任务控件
