@@ -7,7 +7,7 @@ import functools
 
 #######################    全局常量    ######################
 # 每页显示任务数量
-PAGE_CONTENT = 8
+PAGE_CONTENT = 6
 
 
 #######################    自定义可复用方法    ######################
@@ -70,18 +70,25 @@ class TaskManager(models.Manager):
     '''
     #######################    事务处理    ######################
     # 删除一个任务
-    @transaction_handler
-    def delete_task(self, task_id):
+    # @transaction_handler
+    def delete_a_task(self, task_id):
         super().get_queryset().filter(pk=task_id).delete()
+        return True
 
     # 编辑一个待办事项
-    @transaction_handler
-    def update_task(self, task_id, new_title):
-        super().get_queryset().filter(pk=task_id).update(title=new_title)
+    # @transaction_handler
+    def update_task(self, task_id, new_title=None,
+                    deadline=None, tag=None, 
+                    taskPri=None, project=None):
+        if new_title:
+            super().get_queryset().filter(pk=task_id).update(title=new_title, 
+                                          deadline=deadline, taskPriority=taskPri, 
+                                          project=project, tag=tag)
+        return self.get_task(task_id)
 
     #######################    非事务处理    ######################
     # 创建一个任务
-    @transaction_handler
+    # @transaction_handler
     def create_task(self, 
                     title, 
                     deadline=None, 
@@ -97,7 +104,6 @@ class TaskManager(models.Manager):
             tag: 任务标签
             taskPri: 任务优先级
             project: 任务所属项目
-
         Returns:
             返回新创建的task对象
         
@@ -107,14 +113,13 @@ class TaskManager(models.Manager):
         task = super().get_queryset().create(title=title, deadline=deadline, tag=tag,
                                              taskPriority=taskPri, project=project)
         task.save()
-        return task
+        return self.get_task(task.id)
 
     # 查询一个待办事项
     @search_exception
     def get_task(self, task_id):
         task_queryset = super().get_queryset().filter(pk=task_id)
-        return task_queryset[0]
-
+        return serialize_to_json_handler(task_queryset)
     # # 查询所有待办事项
     # @search_exception
     # def search_all_tasks(self):
@@ -155,4 +160,4 @@ class TaskManager(models.Manager):
     def search_tasks_for_deadline(self, pageNum=1):
         indexs = page_content_for(pageNum)
         tasks = super().get_queryset().order_by('deadline')[indexs[0]:indexs[1]]
-        return tasks
+        return serialize_to_json_handler(tasks)

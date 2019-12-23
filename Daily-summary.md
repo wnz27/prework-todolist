@@ -75,4 +75,9 @@ The terminal process terminated with exit code: 1
 4. 优化重构后端api方法
 
 ## 2019.12.22
-1. 
+1. 临时有事
+2. 抽空看了一下django官方文档的处理请求流程
+
+## 2019.12.23
+1. URL配置，视图函数配置
+2. 前端组件配置

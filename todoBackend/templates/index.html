@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% csrf_token %}
 {% load static %}
 {% block css_style %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
@@ -9,7 +10,7 @@ test hahaha
 {% block content %}
 <h1>hello django {{ name }}</h1>
 <ul>
-{% for item in array %}
+{% for item in object_list %}
 <li>
 {{ item }} -- {{ forloop.counter0 }} -- {{forloop.counter}} -- 
 {{ forloop.revcounter }} -- {{ forloop.revcounter0 }}
@@ -24,6 +25,6 @@ is last
 {% endfor %}
 </ul>
 
-<a href="{% url 'index' 'fzk' %}"> return </p>
+<a href="{% url 'tasks-view' '1' %}"> return </p>
 {% endblock %}
 
