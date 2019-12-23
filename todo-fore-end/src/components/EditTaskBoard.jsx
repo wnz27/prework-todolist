@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Table, Icon } from 'antd';
+import { Table, Icon, Divider } from 'antd';
 
 const { Column } = Table;
 
@@ -38,20 +38,25 @@ class TaskList extends React.Component {
         this.state = { 
             list: data
         };
-        this.handleClick = this.handleClick.bind(this)
+        this.handleEdit = this.handleEdit.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
       }
     
-    handleClick(e) {
+    handleEdit(e) {
+      console.log('click', e);
+    }
+
+    handleDelete(e){
       console.log('click', e);
     }
 
     render() {
         return(
             <Table dataSource={data}>
-            <Column title="title" dataIndex="title" key="title" />
-            <Column title="project" dataIndex="project" key="project" />
             <Column title="taskPriority" dataIndex="taskPriority" key="taskPriority" />
+            <Column title="project" dataIndex="project" key="project" />
             <Column title="tag" dataIndex="tag" key="tag" />
+            <Column title="title" dataIndex="title" key="title" />
             <Column title="deadline" dataIndex="deadline" key="deadline" />
             <Column title="done" dataIndex="deadline" key="deadline" />
             <Column
@@ -59,7 +64,9 @@ class TaskList extends React.Component {
             key="action"
             render={(text, record) => (
                 <span>
-                <Icon type="form" onClick={this.handleClick}/>
+                <Icon type="form" onClick={this.handleEdit}/>
+                <Divider type="vertical" />
+                <Icon type="close-circle" onClick={this.handleDelete}/>
                 </span>
             )}
             />

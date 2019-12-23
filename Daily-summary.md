@@ -71,13 +71,15 @@ The terminal process terminated with exit code: 1
 ## 2019.12.21
 1. 研究下manager，models API巩固
 2. 对外api操作重新封装供以后视图函数调用
-3. 研究下Django的serialization和数据库的transaction的使用
+3. 研究下Django的serialize和数据库的transaction的使用
 4. 优化重构后端api方法
 
 ## 2019.12.22
-1. 临时有事
+1. 临时有事，什么都没写
 2. 抽空看了一下django官方文档的处理请求流程
 
 ## 2019.12.23
 1. URL配置，视图函数配置
-2. 前端组件配置,差最后一个编辑任务控件
+2. 前端组件配置,差最后一个编辑任务组件
+
+## 2019.12.24
