@@ -12,7 +12,7 @@ from . import views
 # 
 # 
 # 
-
+# 返回列表的url
 extra_list_patterns = [
     path('', views.TasksForPageListView.as_view(), 
          name='tasks-first-page-list'),
@@ -28,11 +28,13 @@ extra_list_patterns = [
          name='tasks-tag-list')
 ]
 
+# 返回详情的url
 extra_detail_patterns = [
     path('<uuid:task_id>', views.TaskDetailView.as_view(),
          name='task-detail'),
 ]
 
+# 返回操作的url
 extra_operation_patterns = [
      path('destory/<uuid:task_id>', views.TaskDeleteView.as_view(),
           name='delete-a-task'),
@@ -44,6 +46,7 @@ extra_operation_patterns = [
           name='done-a-task')
 ]
 
+# 集成url
 urlpatterns = [
     path('list/', include(extra_list_patterns)),
     path('detail/', include(extra_detail_patterns)),
