@@ -83,3 +83,58 @@ The terminal process terminated with exit code: 1
 2. 前端组件配置,差最后一个编辑任务组件
 
 ## 2019.12.24
+1. 使用axios请求数据
+2. 调整后端数据返回格式
+3. 一天大部分时间研究react-router，总会出现<Link>标签放在map函数里报错的问题
+以前没有使用过react-router，所以感觉时间紧，我换了思路来做，这个留到后面有时间再研究
+4. 使用axios请求数据的问题总结一下，今天遇见一个组件作用域的问题，如下：
+```
+componentDidMount(){
+      axios.get(`${baseURL}/task/list/deadline/${pageNum}`)
+      .then(functiong (response) {
+        console.log(response.data)
+        this.setState({
+          list: response.data
+        })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+报错：TypeError: Cannot read property 'setState' of undefined
+```
+但是我把then后面改为
+```
+componentDidMount(){
+      axios.get(`${baseURL}/task/list/deadline/${pageNum}`)
+      .then((response) => {
+        console.log(response.data)
+        this.setState({
+          list: response.data
+        })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+```
+就没有问题了，这个也反映了自己react薄弱的问题，我觉得是作用域的问题，但是原理我并不清楚，后面再查看。
+5. 剩下时间就是调试组件
+
+## 2019.12.25
+1. 调试前端组件
+2. 前端功能和数据显示调试
+3. 遇见另一作用域问题 ：
+在ant的Popconfirm组件里， 以下就可以成功传过去值
+```
+<Popconfirm title="Are you sure？" okText="Yes"cancelText=“No” 
+onConfirm={() => this.handleDelete(record.taskId)}>
+```
+以下就不行：
+```
+<Popconfirm title="Are you sure？" okText="Yes"cancelText=“No” 
+onConfirm={this.handleDelete(record.taskId)}>
+```
+
+4. 大致完成啦~~~~所有人圣诞快乐啊！！！！提前元旦快乐！！！！
+

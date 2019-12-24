@@ -7,7 +7,7 @@ import functools
 
 #######################    全局常量    ######################
 # 每页显示任务数量
-PAGE_CONTENT = 6
+PAGE_CONTENT = 1000
 
 
 #######################    自定义可复用方法    ######################
@@ -85,6 +85,16 @@ class TaskManager(models.Manager):
                                           deadline=deadline, taskPriority=taskPri, 
                                           project=project, tag=tag)
         return self.get_task(task_id)
+    
+    # 标记任务完成
+    def update_a_task_done(self, task_id, new_done):
+        super().get_queryset().filter(pk=task_id).update(done=new_done)
+        return True
+    
+    # 设置优先级
+    def update_a_task_priority(self, task_id, new_pri):
+        super().get_queryset().filter(pk=task_id).update(taskPriority=new_pri)
+        return True
 
     #######################    非事务处理    ######################
     # 创建一个任务
@@ -119,7 +129,7 @@ class TaskManager(models.Manager):
     @search_exception
     def get_task(self, task_id):
         task_queryset = super().get_queryset().filter(pk=task_id)
-        return serialize_to_json_handler(task_queryset)
+        return serialize_to_json_handler(task_queryset)[0]['fields']
     # # 查询所有待办事项
     # @search_exception
     # def search_all_tasks(self):
@@ -131,33 +141,55 @@ class TaskManager(models.Manager):
     @search_exception
     def search_tasks_for_page(self, pageNum=1):
         indexs = page_content_for(pageNum)
-        tasks = super().get_queryset().all()[indexs[0]:indexs[1]]
-        return serialize_to_json_handler(tasks)
+        tasks = super().get_queryset().filter(done=False)[indexs[0]:indexs[1]]
+        response = []
+        for item in serialize_to_json_handler(tasks):
+            item['fields']['taskId'] = item['pk']
+            response.append(item['fields'])
+        return response
 
     # 根据project筛选待办事项
     @search_exception
     def search_tasks_for_project(self, pass_project, pageNum=1):
         indexs = page_content_for(pageNum)
-        tasks = super().get_queryset().filter(project=pass_project)[indexs[0]:indexs[1]]
-        return serialize_to_json_handler(tasks)
+        tasks = super().get_queryset().filter(project=pass_project, done=False)[indexs[0]:indexs[1]]
+        response = []
+        for item in serialize_to_json_handler(tasks):
+            item['fields']['taskId'] = item['pk']
+            response.append(item['fields'])
+        print(response)
+        return response
 
     # 根据tag筛选待办事项
     @search_exception
     def search_tasks_for_tag(self, pass_tag, pageNum=1):
         indexs = page_content_for(pageNum)
-        tasks = super().get_queryset().filter(tag=pass_tag)[indexs[0]:indexs[1]]
-        return serialize_to_json_handler(tasks)
+        tasks = super().get_queryset().filter(tag=pass_tag, done=False)[indexs[0]:indexs[1]]
+        response = []
+        for item in serialize_to_json_handler(tasks):
+            item['fields']['taskId'] = item['pk']
+            response.append(item['fields'])
+        print(response)
+        return response
 
     # 按照优先级筛选显示
     @search_exception
     def search_task_for_priority(self, pri, pageNum=1):
         indexs = page_content_for(pageNum)
-        tasks = super().get_queryset().filter(taskPriority=pri)[indexs[0]:indexs[1]]
-        return serialize_to_json_handler(tasks) 
-
+        tasks = super().get_queryset().filter(taskPriority=pri, done=False)[indexs[0]:indexs[1]]
+        response = []
+        for item in serialize_to_json_handler(tasks):
+            item['fields']['taskId'] = item['pk']
+            response.append(item['fields'])
+        print(response)
+        return response
     # 按照过期时间筛选显示
     @search_exception
     def search_tasks_for_deadline(self, pageNum=1):
         indexs = page_content_for(pageNum)
-        tasks = super().get_queryset().order_by('deadline')[indexs[0]:indexs[1]]
-        return serialize_to_json_handler(tasks)
+        tasks = super().get_queryset().filter(done=False).order_by('deadline')[indexs[0]:indexs[1]]
+        response = []
+        for item in serialize_to_json_handler(tasks):
+            item['fields']['taskId'] = item['pk']
+            response.append(item['fields'])
+        return response

@@ -34,12 +34,14 @@ extra_detail_patterns = [
 ]
 
 extra_operation_patterns = [
-    path('destory/<uuid:task_id>', views.TaskDeleteView.as_view(),
-         name='delete-a-task'),
-    path('edit/<uuid:task_id>', views.TaskEditView.as_view(),
-         name='edit-a-task'),
-    path('create', views.TaskCreateView.as_view(),
-         name='create-a-task')
+     path('destory/<uuid:task_id>', views.TaskDeleteView.as_view(),
+          name='delete-a-task'),
+     path('edit/<uuid:task_id>', views.TaskEditView.as_view(),
+          name='edit-a-task'),
+     path('create', views.TaskCreateView.as_view(),
+          name='create-a-task'),
+     path('done/<uuid:task_id>', views.TaskDoneView.as_view(),
+          name='done-a-task')
 ]
 
 urlpatterns = [
