@@ -1,5 +1,6 @@
 #! -*- encoding=utf-8 -*-
 import json
+import time
 from django.db import models, transaction
 from django.db.models import Q
 from django.core import serializers
@@ -145,6 +146,7 @@ class TaskManager(models.Manager):
         response = []
         for item in serialize_to_json_handler(tasks):
             item['fields']['taskId'] = item['pk']
+            item['fields']['deadline'] = item['fields']['deadline'][:10]
             response.append(item['fields'])
         return response
 
@@ -156,6 +158,7 @@ class TaskManager(models.Manager):
         response = []
         for item in serialize_to_json_handler(tasks):
             item['fields']['taskId'] = item['pk']
+            item['fields']['deadline'] = item['fields']['deadline'][:10]
             response.append(item['fields'])
         print(response)
         return response
@@ -168,6 +171,7 @@ class TaskManager(models.Manager):
         response = []
         for item in serialize_to_json_handler(tasks):
             item['fields']['taskId'] = item['pk']
+            item['fields']['deadline'] = item['fields']['deadline'][:10]
             response.append(item['fields'])
         print(response)
         return response
@@ -180,6 +184,7 @@ class TaskManager(models.Manager):
         response = []
         for item in serialize_to_json_handler(tasks):
             item['fields']['taskId'] = item['pk']
+            item['fields']['deadline'] = item['fields']['deadline'][:10]
             response.append(item['fields'])
         print(response)
         return response
@@ -191,5 +196,6 @@ class TaskManager(models.Manager):
         response = []
         for item in serialize_to_json_handler(tasks):
             item['fields']['taskId'] = item['pk']
+            item['fields']['deadline'] = item['fields']['deadline'][:10]
             response.append(item['fields'])
         return response

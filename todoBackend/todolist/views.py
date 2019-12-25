@@ -97,6 +97,7 @@ class TaskEditView(DetailView):
         res = self.model.externalAPI.update_task(task_id, new_title=new_title, 
                         deadline=new_deadline, tag=new_tag, taskPri=new_priority,
                         project=new_project)
+        print(res)
         if res:
             return JsonResponse(res, safe=False)
         return JsonResponse({'error':0}, safe=False)

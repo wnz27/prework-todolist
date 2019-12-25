@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios'
 import CreateTaskButton from './CreateTaskBoard'
 import { Table, Icon, Divider, Popconfirm, Radio, Popover, Button, Input, Alert} from 'antd';
-import { getTaskListByDeadline } from '../requestData/MyRequestByAxios'
+import CollectionsPage from './TaskEdit'
 
 const baseURL = 'http://127.0.0.1:8000'
 const pageNum = 1
@@ -42,7 +42,7 @@ class TaskList extends React.Component {
       })
       .then((response) => {
         console.log(task_id)
-        if (response.data.error == 0){
+        if (response.data.error === 0){
           return <Alert message="Done Failed!" type="error" />
         }
         else {
@@ -69,7 +69,7 @@ class TaskList extends React.Component {
       axios.delete(`${baseURL}/task/operation/destory/${task_id}`)
       .then((response) => {
         console.log(response.data)
-        if (response.data.error == 0){
+        if (response.data.error === 0){
           return <Alert message="Delete Failed!" type="error" />
         }
         else {
@@ -104,10 +104,12 @@ class TaskList extends React.Component {
             key={this.state.list.taskId}
             render={(text, record) => (
                 <span>
-                <CreateTaskButton 
-                oldTitle={record.title} 
+                <CollectionsPage 
                 buttonName="Edit"
-                placeStyle="left"
+                defaultTitle={record.title}
+                defaultTag={record.tag}
+                defaultProject={record.project}
+                taskId={record.taskId}
                 />
                 <Divider type="vertical" />
                 <Popconfirm title="Are you sure？" okText="Yes"
