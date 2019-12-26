@@ -145,4 +145,5 @@ onConfirm={this.handleDelete(record.taskId)}>
 3. js的注释不规范，没有研究过js注释的说明
 4. python注释可能不太详细
 5. django测试的编写不熟悉
+6. API设计不够合理，按照restful设计的话需要更改视图函数与url的配置，现在的设计有太多冗余
 
