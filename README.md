@@ -12,12 +12,10 @@
 ---
 预计耗时
 7 天之内需要完成
-如果 7 天之内无法完成，需要向和你联系的 HR 告知并重新约一个开始做任务的时间
 
 任务要求
 使用 Django, Django Rest Framework, Ant Design, PostgreSQL, React 等技术做一个待办事项的网站。
 
-一个参考的例子：https://todoist.com
 
 #### 需要支持的功能：
 - [X] 增加一个待办事项
@@ -60,7 +58,6 @@
 - [ ] （可选）在 AWS / 阿里云 / Digital Ocean / 青云 或者是你的机器上将服务跑起来
 
 附录
-GIF 截图工具 - https://www.getcloudapp.com/
 截图Jietu (Mac) - https://itunes.apple.com/cn/app/id1059334054?mt=12
 Django - https://www.djangoproject.com/ 使用 Django 2.2, Python 3.6
 Django Rest Framework - http://www.django-rest-framework.org/
